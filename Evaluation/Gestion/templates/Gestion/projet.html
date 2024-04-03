@@ -1,0 +1,37 @@
+{% include "Gestion/nav.html" %}
+<head> 
+    <title>Information projet {{ Projet }}</title>
+    
+</head>
+<body>
+<center>
+
+  
+    
+   Nom du projet: {{ Projet.project_name }}<br>
+   Date de début du projet:  {{ Projet.start_date }}<br>
+   Date de livraison du projet:  {{ Projet.delivery_date }}<br>
+   Statut du projet :  {{ Projet.project_statut }}<br>
+   Avancement :  {{ Projet.project_avancement }}<br>
+   <br>
+   Responsable du projet: {{ Projet.responsable.user.username }}
+   <br><br>
+
+   {% if Projet.responsable.user == user %}
+   <a href="/Gestion/modprojet/{{Projet.id}}">Modifiez ce projet</a><br/><br/>
+   {%endif%}
+
+   Voici toutes les taches liées au projet.
+   <table border=1px}>
+    <tr><th>Nom de la tache</th><th>Description de la tache</th><th>Priorité</th><th>Date début</th><th>durée</th><th>statut</th><th>etat</th><th>niveau</th><th>tache maitresse</th></tr>
+   {% for t in Tache %}
+    <br>
+    
+   <tr><td><a href="/Gestion/tache/{{t.id}}">{{ t.tache_name }}</a></td><td>{{ t.tache_description }}</td><td>{{ t.tache_priorite}}</td><td>{{ t.start_date}}</td><td>{{ t.tache_duree}}</td><td>{{ t.tache_statut}}</td><td>{{ t.tache_etat}}</td><td>{{ t.tache_niveau}}</td><td>{%if t.tache_maitresse%}<a href="/Gestion/tache/{{ t.tache_maitresse.id }}">{{ t.tache_maitresse}}</td></a>{%else%}None{%endif%}</td></tr>
+    {% endfor %}
+    </table>
+
+  
+
+</center>
+</body>

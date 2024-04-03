@@ -1,0 +1,13 @@
+{% include "Gestion/nav.html" %}
+
+<form action="" method=POST>
+    {% csrf_token %}
+    <input name="utilisateur_id" type="hidden" value="{{user.id}}" />
+    <br><br>
+    Commentaire <input type="text" name="description"><br><br>
+  
+
+
+    <input type="submit" value="Envoyer">
+
+</form>

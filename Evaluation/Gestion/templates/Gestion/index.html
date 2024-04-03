@@ -1,0 +1,18 @@
+{% include "Gestion/nav.html" %}
+<head> 
+    <title>Liste projets</title>
+    
+</head>
+<body>
+<center>Voici la liste de tout les projets
+{% if listprojet %}
+    <ul>
+    {% for project in listprojet %}
+        <a href="/Gestion/projet/{{ project.id }}">{{ project.project_name }}</a><br>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Il n'y a pas de projets</p>
+{% endif %}
+</center>
+</body>

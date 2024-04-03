@@ -1,0 +1,44 @@
+{% include "Gestion/nav.html" %}
+ <head> 
+    <title>Information de la tache {{ Tache.tache_name }}</title>
+    
+</head>
+<body>
+    
+    <center>
+
+    Nom de la tache: {{ Tache.tache_name }}<br>
+    Description de la tache: {{Tache.tache_description }}<br>
+    Prioritée: {{ Tache.tache_priorite}}<br>
+    Date de commencement  {{Tache.start_date}}<br>
+    Durée: {{ Tache..tache_duree}}<br>
+    Statut: {{ Tache.tache_statut}}<br>
+    etat: {{Tache.tache_etat}}<br>
+    Niveau: {{ Tache.tache_niveau}}<br>
+    Personne en charge: {{Tache.tache_charge}}<br>
+Tache maitresse:{%if Tache.tache_maitresse%}
+<a href="/Gestion/tache/{{ Tache.tache_maitresse.id }}">{{ Tache.tache_maitresse}}</a>
+{%else%}None
+{%endif%}<br>
+<br><br>
+
+{% if Tache.projet.responsable.user == user %}
+<a href="/Gestion/ModTache/{{Tachet.id}}">Modifiez cette tache</a><br/><br/>
+{%endif%}
+
+{% if Tache.tache_charge.user == user %}
+<a href="/Gestion/ajoutrapport/{{Tache.id}}">Ajoutez un rapport</a><br/><br/>
+{%endif%}
+
+Liste des rapports:
+<table border=1px}>
+   <tr> <th>Utilisateur</th><th>Date</th><th>Description</th></tr>
+    {% for rapport in Rapport %}
+    <tr><td>{{ rapport.utilisateur.user }}</td>
+    <td>{{ rapport.rapport_date }}</td>
+    <td>{{ rapport.rapport_description }}</td></tr>
+    {% endfor %}
+</table>
+
+</center>
+</body>

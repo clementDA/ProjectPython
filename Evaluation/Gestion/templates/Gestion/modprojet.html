@@ -1,0 +1,32 @@
+{% include "Gestion/nav.html" %}
+<head> 
+    <title>Information projet {{ Projet }}</title>
+    
+</head>
+<body>
+<center>
+    <form action="" method=POST>
+        {% csrf_token %}
+    <input name="utilisateur_id" type="hidden" value="{{projet.id}}" />
+   Nom du projet: <br> <input type="text" name="project_name" value='{{Projet.project_name }}'><br>   
+   Date de début du projet: <input type="datetime" name="start_date" value='{{Projet.start_date }}'><br>
+   Date de livraison du projet:  <input type="datetime" name="delivery_date" value='{{ Projet.delivery_date }}'><br>
+   Statut du projet :  <input type="text" name="project_name" value='{{ Projet.project_statut }}'><br>
+   Avancement : <input type="number" name="project_name" value='{{ Projet.project_avancement }}'> <br>
+   <br>
+   Responsable du projet: {{ Projet.responsable.user.username }}
+   <br><br>
+
+  
+
+   
+    
+    <input name="utilisateur_id" type="hidden" value="{{user.id}}" />
+    <br><br>
+   
+  
+
+
+    <input type="submit" value="Modifier le projet">
+
+</form>
