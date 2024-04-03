@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 #Liste des modéles
 
+#modéle utilisateur, réutilise les modele déjà existant des users
 class Utilisateur(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     role = models.CharField(max_length=40)
@@ -10,7 +11,7 @@ class Utilisateur(models.Model):
         return self.user.username
 
 
-
+#modéle de représentation des projets
 class Projet(models.Model):
     responsable=models.ForeignKey(Utilisateur,on_delete=models.CASCADE,null=True, blank=True)
     project_name = models.CharField(max_length=200)
@@ -29,6 +30,7 @@ class Projet(models.Model):
         return self.project_name
 
 
+#modéle de représentation des taches
 class Tache(models.Model):
     projet = models.ForeignKey(Projet, on_delete=models.CASCADE)
     tache_charge = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
@@ -53,6 +55,7 @@ class Tache(models.Model):
         return self.tache_name
 
 
+#modéle de présentation des rapports
 class Rapport(models.Model):
     tache = models.ForeignKey(Tache, on_delete=models.CASCADE)
     utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
@@ -62,7 +65,7 @@ class Rapport(models.Model):
         return self.rapport_description
 
 
-
+#modéle de sauvegarde des absences
 class absence(models.Model):
     utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
     start_date= models.DateTimeField()
@@ -72,6 +75,7 @@ class absence(models.Model):
         return self.absence_raison
 
 
+#modéle d'attribution des utilisateurs aux taches
 class Occupe(models.Model):
      utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
      tache = models.ForeignKey(Tache, on_delete=models.CASCADE)
