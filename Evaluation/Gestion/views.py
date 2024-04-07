@@ -54,8 +54,7 @@ def tache(request,tache_id):
 def ajoutrapport(request,tache_id):
     if request.method == "POST":
          utilisateur=Utilisateur.objects.get(pk=request.POST['utilisateur_id'])
-         newrapport=Rapport(tache =Tache.objects.get(pk=tache_id),utilisateur=utilisateur, rapport_date=timezone.now() ,rapport_description=request.POST['description'] )
-         newrapport.save()
+         Rapport.addrapport(Tache.objects.get(pk=tache_id),utilisateur,request.POST['description'])
          tache=Tache.objects.get(pk=tache_id)
          rapport=Rapport.objects.filter(tache=tache_id).order_by('rapport_date')
          return render(request, "Gestion/tache.html", {"Tache": tache, "Rapport": rapport})
@@ -65,6 +64,13 @@ def ajoutrapport(request,tache_id):
 
 #affichage et gestion de la modification d'un projet
 def modprojet(request,project_id):
-    projet=Projet.objects.get(pk=project_id)
-    taches=Tache.objects.filter(projet=project_id).order_by('tache_priorite')
-    return render(request, "Gestion/modprojet.html", {"Projet": projet})
+    if request.method == "POST":
+        responsable_user=Utilisateur.objects.get(pk=request.POST['Responsable_id'])
+        Projet.modifprojet(project_id,request.POST['project_name'],request.POST['start_date'],request.POST['delivery_date'],responsable_user)
+        path='/Gestion/projet/'+str(project_id)
+        return redirect(path)
+    else:
+        projet=Projet.objects.get(pk=project_id)
+        responsable=Utilisateur.objects.filter(role="responsable").order_by('id')
+        taches=Tache.objects.filter(projet=project_id).order_by('tache_priorite')
+        return render(request, "Gestion/modprojet.html", {"Projet": projet, "Responsable": responsable})

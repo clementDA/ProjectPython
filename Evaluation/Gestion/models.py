@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.utils import timezone
 #Liste des modéles
 
 #modéle utilisateur, réutilise les modele déjà existant des users
@@ -28,6 +28,14 @@ class Projet(models.Model):
     project_avancement = models.IntegerField(default=0)
     def __str__(self):
         return self.project_name
+    #fonction de modification d'un projet
+    def modifprojet(p_id,p_name,p_start_date,p_delivery_date,p_responsable):
+        p_projet=Projet.objects.get(id=p_id)
+        p_projet.name=p_name
+        p_projet.start_date=p_start_date
+        p_projet.delivery_date=p_delivery_date
+        p_projet.responsable=p_responsable
+        p_projet.save() 
 
 
 #modéle de représentation des taches
@@ -63,6 +71,9 @@ class Rapport(models.Model):
     rapport_description= models.CharField(max_length=200)
     def __str__(self):
         return self.rapport_description
+    def addrapport(tacheid,utilisateur,description):
+         newrapport=Rapport(tache =tacheid,utilisateur=utilisateur, rapport_date=timezone.now() ,rapport_description=description )
+         newrapport.save()
 
 
 #modéle de sauvegarde des absences

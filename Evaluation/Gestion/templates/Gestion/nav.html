@@ -1,7 +1,10 @@
 
     <a href="/Gestion">Liste des projets</a>
-    <a href="/Gestion/logingout">Logout</a>
-   {% if user.is_authenticated %}
-   Loged as {{user.username}}   
   
+   {% if user.is_authenticated %}
+   <a href="/Gestion/logingout">Logout</a>
+   Loged as {{user.username}}   
+   {%else%}
+   <a href="/Gestion/login">Login</a>
+   
    {%endif %}
